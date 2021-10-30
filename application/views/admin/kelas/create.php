@@ -26,11 +26,11 @@
                 </div>
                 <div class="form-group">
                     <label>Daftar Guru</label>
-
-                    <?php foreach ($user as $user) { ?>
-                        <input name="id_user" id="id_user" type="checkbox" class="form-check-input" value="<?php echo $user->id; ?>">
-                        <?php echo $user->name; ?></option>
-                    <?php } ?>
+                    <select class="form-control" id="daftar_guru" name="daftar_guru" multiple>
+                        <?php foreach ($user as $user) { ?>
+                            <option value="<?php echo $user->id; ?>"><?php echo $user->name; ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">

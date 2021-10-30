@@ -32,7 +32,6 @@ class Kelas extends CI_Controller
 
     public function index()
     {
-
         $valid = $this->form_validation;
         $valid->set_rules('jumlah_kelas', 'Jumlah Pelajar', 'required', array('required' => 'Jumlah Pelajar harus diisi'));
         $valid->set_rules('nama_kelas', 'Nama Kelas', 'required|is_unique[kelas.nama_kelas]', array(

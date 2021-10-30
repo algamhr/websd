@@ -17,6 +17,7 @@
          <div class="card-header py-3">
              <?php if ($this->session->userdata('akses_level') == '21') { ?>
                  <?php include('create.php'); ?>
+                 <!-- <a href="<?php echo base_url('kelas/createnew'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a> -->
              <?php } ?>
          </div>
          <div class="card-body">
