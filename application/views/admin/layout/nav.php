@@ -5,7 +5,7 @@ $konfig = $this->konfigurasi_model->listing(); ?>
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url(); ?>">
-        <div class="sidebar-brand-icon rotate-n-15">
+        <div class="sidebar-brand-icon">
             <i class="fas fa-school"></i>
         </div>
         <div class="sidebar-brand-text mx-3"><?php echo $konfig->nama_web; ?></div>

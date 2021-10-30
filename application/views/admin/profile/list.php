@@ -15,41 +15,36 @@
     <!-- DataTales Example -->
     <div class="row">
         <?php if ($this->session->userdata('id') == $profile_edit->id) { ?>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <?php include('update_password.php'); ?>
                     </div>
                     <div class="card-body">
-                        <?php echo form_open(base_url('profile/detail/' . $profile_edit->id)); ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Nama</label>
-                                    <input type="text" class="form-control form-control-sm" name="name" id="name" value="<?php echo $profile_edit->name ?>" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" class="form-control form-control-sm" name="username" id="username" value="<?php echo $profile_edit->username ?>" readonly>
-                                </div>
-                                <?php if ($this->session->userdata('akses_level') == '1') { ?>
-                                    <div class="form-group">
-                                        <label for="id_kelas">Kelas</label>
-                                        <input type="text" class="form-control form-control-sm" name="id_kelas" id="id_kelas" value="<?php echo $profile_edit->nama_kelas; ?>" readonly>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Profil User</label><br>
-                                    <img height="100px" width="100px" class="gambar" name="gambar" src="<?php echo base_url(); ?>asset/upload/image/user.png">
-                                    <input type="file" class="form-control form-control-sm" name="gambar" id="gambar" value="">
-                                    <br>
-                                    <?php include('delete.php'); ?>
-                                    <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                                </div>
-                            </div>
+                        <?php echo form_open_multipart(base_url('profile/detail/' . $profile_edit->id)); ?>
+                        <div class="form-group">
+                            <label for="name">Profil User</label><br>
+                            <?php if ($profile_edit->gambar != null) { ?>
+                                <img height="100px" width="100px" class="gambar mb-2" name="gambar" src="<?php echo base_url(); ?>asset/upload/image/<?php echo $profile_edit->gambar; ?>">
+                            <?php } else { ?>
+                                <img height="100px" width="100px" class="gambar mb-2" name="gambar" src="<?php echo base_url(); ?>asset/upload/image/user.png">
+                            <?php } ?>
+                            <input type="file" class="form-control form-control-sm" name="gambar" id="gambar" value="">
                         </div>
+                        <div class="form-group">
+                            <label for="name">Nama</label>
+                            <input type="text" class="form-control form-control-sm" name="name" id="name" value="<?php echo $profile_edit->name ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control form-control-sm" name="username" id="username" value="<?php echo $profile_edit->username ?>" readonly>
+                        </div>
+                        <?php if ($this->session->userdata('akses_level') == '1') { ?>
+                            <div class="form-group">
+                                <label for="id_kelas">Kelas</label>
+                                <input type="text" class="form-control form-control-sm" name="id_kelas" id="id_kelas" value="<?php echo $profile_edit->nama_kelas; ?>" readonly>
+                            </div>
+                        <?php } ?>
                         <br>
                         <button type="reset" class="btn btn-secondary btn-sm">Reset</button>
                         <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
@@ -65,6 +60,10 @@
                     </div>
                     <div class="card-body">
                         <?php echo form_open(base_url('profile/detail/' . $profile->id)); ?>
+                        <div class="form-group">
+                            <label for="name">Profil User</label><br>
+                            <img height="100px" width="100px" class="gambar mb-2" name="gambar" src="<?php echo base_url(); ?>asset/upload/image/user.png">
+                        </div>
                         <div class="form-group">
                             <label for="name">Nama</label>
                             <input type="text" class="form-control form-control-sm" name="name" id="name" value="<?php echo $profile->name ?>" readonly>
