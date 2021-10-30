@@ -66,6 +66,7 @@ class Profile extends CI_Controller
     public function detail($id)
     {
         $profile = $this->user_model->detail_user_kelas($id);
+        $user = $this->user_model->detail($id);
         $profile_edit = $this->user_model->detail($id);
         $nilai = $this->nilai_pengguna_model->nilai_pelajaran($profile->username, $profile->id_kelas);
         $pelajaran = $this->nilai_pengguna_model->akumulasi($profile->username);
@@ -74,20 +75,6 @@ class Profile extends CI_Controller
             'required' => 'Username harus diisi',
             'trim' => 'Username tidak boleh ada spasi'
         ));
-
-        $config['upload_path']          = './uploads/';
-        $config['allowed_types']        = 'jpg|png';
-        $config['max_size']             = 100;
-        $config['max_width']            = 1024;
-        $config['max_height']           = 768;
-
-        $this->load->library('upload', $config);
-
-        if (!$this->upload->detail('gambar')) {
-            $error = array('error' => $this->upload->display_errors());
-
-            $this->load->view('list', $error);
-        }
 
         if ($this->form_validation->run() === FALSE) {
             $data = array(
@@ -100,15 +87,73 @@ class Profile extends CI_Controller
             );
             $this->load->view('admin/layout/wrapper', $data);
         } else {
-            $data = array(
-                'id'    => $id,
-                'name' => $this->input->post('name'),
-                'username' => $this->input->post('username'),
-            );
 
-            $this->user_model->update($data);
-            $this->session->set_flashdata('sukses', 'Profile telah diperbarui');
-            redirect(base_url('profile/detail/' . $id));
+            //kalau ada gambar
+            if (!empty($_FILES['gambar']['name'])) {
+
+                $config['upload_path']         = './asset/upload/image/';  //lokasi folder upload
+                $config['allowed_types']     = 'gif|jpg|png|svg|tiff|doc|docx|xls|xlsx|pdf|ppt|pptx|txt|doc|docx|zip|rar'; //format file yang di-upload
+                $config['max_size']            = '10000'; // KB	
+                $this->load->library('upload', $config);
+
+                if (!$this->upload->do_upload('gambar')) {
+                    $data = array(
+                        'title'     => $profile_edit->name,
+                        'isi'         => 'admin/profile/list',
+                        'profile'    => $profile,
+                        'profile_edit' => $profile_edit,
+                        'nilai' => $nilai,
+                        'pelajaran' => $pelajaran,
+                        'error'     =>  $this->upload->display_errors()
+                    );
+                    $this->load->view('admin/layout/wrapper', $data);
+
+                    // Masuk database 
+                } else {
+                    $upload_data                = array('uploads' => $this->upload->data());
+                    // Image Editor
+                    $config['image_library']    = 'gd2';
+                    $config['source_image']     = './asset/upload/image/' . $upload_data['uploads']['file_name'];
+                    $config['new_image']         = './asset/upload/image/thumbs/';
+                    $config['create_thumb']     = TRUE;
+                    $config['quality']             = "100%";
+                    $config['maintain_ratio']     = TRUE;
+                    $config['width']             = 360; // Pixel
+                    $config['height']             = 360; // Pixel
+                    $config['x_axis']             = 0;
+                    $config['y_axis']             = 0;
+                    $config['thumb_marker']     = '';
+                    $this->load->library('image_lib', $config);
+                    $this->image_lib->resize();
+
+                    //hapus gambar
+                    if ($user->gambar != "") {
+                        unlink('./asset/upload/image/' . $user->gambar);
+                    }
+                    //end hapus gambar
+                    $data = array(
+                        'id'    => $id,
+                        'name' => $this->input->post('name'),
+                        'username' => $this->input->post('username'),
+                        'gambar'        => $upload_data['uploads']['file_name'],
+                    );
+
+                    $this->user_model->update($data);
+                    $this->session->set_flashdata('sukses', 'Profile telah diperbarui');
+                    redirect(base_url('profile/detail/' . $id));
+                }
+            } else {
+                //tanpa ganti gambar
+                $data = array(
+                    'id'    => $id,
+                    'name' => $this->input->post('name'),
+                    'username' => $this->input->post('username'),
+                );
+
+                $this->user_model->update($data);
+                $this->session->set_flashdata('sukses', 'Profile telah diperbarui');
+                redirect(base_url('profile/detail/' . $id));
+            }
         }
     }
 }
