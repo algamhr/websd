@@ -135,7 +135,10 @@ class Profile extends CI_Controller
                         'id'    => $id,
                         'name' => $this->input->post('name'),
                         'username' => $this->input->post('username'),
+                        'nisn' => $this->input->post('nisn'),
                         'gambar'        => $upload_data['uploads']['file_name'],
+                        'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+                        'agama' => $this->input->post('agama'),
                     );
 
                     $this->user_model->update($data);
@@ -148,6 +151,9 @@ class Profile extends CI_Controller
                     'id'    => $id,
                     'name' => $this->input->post('name'),
                     'username' => $this->input->post('username'),
+                    'nisn' => $this->input->post('nisn'),
+                    'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+                    'agama' => $this->input->post('agama'),
                 );
 
                 $this->user_model->update($data);

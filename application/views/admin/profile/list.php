@@ -54,18 +54,28 @@
                         <div class="form-group">
                             <label for="jenis_kelamin">Jenis Kelamin</label>
                             <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
-                                <option value="draft">Laki-laki</option>
-                                <option value="publish">Perempuan</option>
+                                <option value="L">Laki-laki</option>
+                                <option value="P" <?php if ($profile_edit->jenis_kelamin == "P") {
+                                                        echo "selected";
+                                                    } ?>>Perempuan</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="agama">Agama</label>
                             <select class="form-control" id="agama" name="agama">
-                                <option value="draft">Islam</option>
-                                <option value="publish">Budha</option>
-                                <option value="publish">Kristen</option>
-                                <option value="publish">Katholik</option>
-                                <option value="publish">Hindu</option>
+                                <option value="islam">Islam</option>
+                                <option value="budha" <?php if ($profile_edit->agama == "budha") {
+                                                            echo "selected";
+                                                        } ?>>Budha</option>
+                                <option value="kristen" <?php if ($profile_edit->agama == "kristen") {
+                                                            echo "selected";
+                                                        } ?>>Kristen</option>
+                                <option value="katholik" <?php if ($profile_edit->agama == "katholik") {
+                                                                echo "selected";
+                                                            } ?>>Katholik</option>
+                                <option value="hindu" <?php if ($profile_edit->agama == "hindu") {
+                                                            echo "selected";
+                                                        } ?>>Hindu</option>
                             </select>
                         </div>
                         <br>
