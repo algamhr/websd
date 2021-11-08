@@ -31,6 +31,18 @@
                             <?php } ?>
                             <input type="file" class="form-control form-control-sm" name="gambar" id="gambar" value="">
                         </div>
+
+                        <?php if ($this->session->userdata('akses_level') == '1') { ?>
+                            <div class="form-group">
+                                <label for="id_kelas">Kelas</label>
+                                <input type="text" class="form-control form-control-sm" name="id_kelas" id="id_kelas" value="<?php echo $profile_edit->nama_kelas; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="nisn">NISN</label>
+                                <input type="text" class="form-control form-control-sm" name="nisn" id="nisn" value="<?php echo $profile_edit->nisn ?>" required>
+                            </div>
+                        <?php } ?>
+
                         <div class="form-group">
                             <label for="name">Nama</label>
                             <input type="text" class="form-control form-control-sm" name="name" id="name" value="<?php echo $profile_edit->name ?>" required>
@@ -109,6 +121,33 @@
                                 <?php } ?>
                             </div>
                         <?php } ?>
+                        <div class="form-group">
+                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                            <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                                <option value="L">Laki-laki</option>
+                                <option value="P" <?php if ($profile_edit->jenis_kelamin == "P") {
+                                                        echo "selected";
+                                                    } ?>>Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agama">Agama</label>
+                            <select class="form-control" id="agama" name="agama">
+                                <option value="islam">Islam</option>
+                                <option value="budha" <?php if ($profile_edit->agama == "budha") {
+                                                            echo "selected";
+                                                        } ?>>Budha</option>
+                                <option value="kristen" <?php if ($profile_edit->agama == "kristen") {
+                                                            echo "selected";
+                                                        } ?>>Kristen</option>
+                                <option value="katholik" <?php if ($profile_edit->agama == "katholik") {
+                                                                echo "selected";
+                                                            } ?>>Katholik</option>
+                                <option value="hindu" <?php if ($profile_edit->agama == "hindu") {
+                                                            echo "selected";
+                                                        } ?>>Hindu</option>
+                            </select>
+                        </div>
                         <br>
                         <button type="reset" class="btn btn-secondary btn-sm">Reset</button>
                         <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
