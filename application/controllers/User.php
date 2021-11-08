@@ -61,7 +61,7 @@ class User extends CI_Controller
                 'name' => $this->input->post('name'),
                 'username' => $this->input->post('username'),
                 'password' => sha1($this->input->post('password')),
-                'akses_level' => $this->input->post('akses_level'),
+                'akses_level' => 21,
             );
 
             $this->user_model->add($data);
@@ -91,7 +91,7 @@ class User extends CI_Controller
                 'id'    => $id,
                 'name' => $this->input->post('name'),
                 'username' => $this->input->post('username'),
-                'akses_level' => $this->input->post('akses_level'),
+                'akses_level' => 21,
             );
 
             $this->user_model->update($data);

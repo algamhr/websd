@@ -1,0 +1,41 @@
+<a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#editModal<?php echo $row->id; ?>">
+    <i class="fa fa-edit"></i>
+    Edit
+</a>
+<!-- Tambah Modal-->
+<div class="modal fade" id="editModal<?php echo $row->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap</label>
+                    <input type="text" class="form-control form-control-sm" name="name" id="name" placeholder="Nama Lengkap" value="<?php echo $row->name; ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control form-control-sm" name="username" id="username" placeholder="Username" value="<?php echo $row->username; ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Pilih Kelas</label>
+                    <select class="form-control bootstrap-select" id="kelas" name="kelas[]" multiple>
+                        <?php foreach ($listkelas as $list) : ?>
+                            <option value="<?php echo $list->id; ?>" <?php if ($list->id == $row->id_kelas) {
+                                                                            echo "selected";
+                                                                        } ?>><?php echo $list->nama_kelas; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>

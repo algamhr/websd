@@ -99,6 +99,12 @@ class Soal_model extends CI_Model
 		return $query->result();
 	}
 
+	public function delete_soal_kelas($id)
+	{
+		$this->db->where_in('id_kelas', $id);
+		$this->db->delete('soal');
+	}
+
 	// public function status_selesai($id_materi)
 	// {
 	// 	$query=$this->db->get_where('nilai', array('id_materi' => $id_materi));

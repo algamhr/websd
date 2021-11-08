@@ -33,13 +33,15 @@
                     <input type="password" class="form-control form-control-sm" name="confirm_password" id="confirm_password" value="" required>
                 </div>
                 <div class="form-group">
-                    <label for="akses_level">Akses Level</label>
-                    <select class="form-control form-control-sm" id="akses_level" name="akses_level">
-                        <span>
-                            <option value="2">Guru</option>
-                        </span>
+                    <label>Pilih Kelas</label>
+                    <select class="form-control bootstrap-select" id="kelas" name="kelas[]" multiple>
+                        <?php foreach ($kelas as $kelas) : ?>
+                            <option value="<?php echo $kelas->slug_kelas; ?>"><?php echo $kelas->nama_kelas; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>

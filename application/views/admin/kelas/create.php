@@ -20,18 +20,6 @@
                     <label for="nama_kelas">Nama Kelas</label>
                     <input type="text" class="form-control form-control-sm" name="nama_kelas" id="nama_kelas" value="<?php echo set_value('nama_kelas'); ?>" required>
                 </div>
-                <div class="form-group">
-                    <label for="jumlah_kelas">Jumlah Pelajar</label>
-                    <input type="number" class="form-control form-control-sm" name="jumlah_kelas" id="jumlah_kelas" value="<?php echo set_value('jumlah_kelas'); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Daftar Guru</label>
-                    <select class="form-control" id="daftar_guru" name="daftar_guru" multiple>
-                        <?php foreach ($user as $user) { ?>
-                            <option value="<?php echo $user->id; ?>"><?php echo $user->name; ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>

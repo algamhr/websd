@@ -96,11 +96,10 @@ $konfig = $this->konfigurasi_model->listing(); ?>
 <script src="<?php echo base_url() ?>asset/fontawesome/icon.js"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
-
 <script>
-    $('.form-control').selectpicker();
+    // $('.form-control').selectpicker();
+    $('.bootstrap-select').selectpicker();
 </script>
 
 </body>

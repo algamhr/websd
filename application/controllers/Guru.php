@@ -10,6 +10,8 @@ class Guru extends CI_Controller
         if ($this->session->userdata('akses_level') == 21) {
             $this->load->model('guru_model');
             $this->load->model('user_model');
+            $this->load->model('kelas_model');
+            $this->load->model('gurukelas_model');
         } else {
             redirect('pagenotfound404', 'refresh');
         }
@@ -17,8 +19,6 @@ class Guru extends CI_Controller
 
     public function index()
     {
-        $site_config = $this->konfigurasi_model->listing();
-        $user = $this->guru_model->listing_admin();
         $valid = $this->form_validation;
         $valid->set_rules('name', 'name', 'required', array('required' => 'name harus diisi'));
         $valid->set_rules('username', 'Username', 'required|trim|is_unique[user.username]', array(
@@ -33,89 +33,168 @@ class Guru extends CI_Controller
         ));
 
         if ($valid->run() === FALSE) {
-            $data = array(
-                'title' => 'Guru',
-                'isi' => 'admin/guru/list',
-                'user' => $user
-            );
+            $data['guru'] = $this->user_model->listing_guru();
+            $data['kelas'] = $this->kelas_model->listing();
+            $data['isi'] = 'admin/guru/list';
+            $data['title'] = 'Guru';
             $this->load->view('admin/layout/wrapper', $data, FALSE);
         } else {
-            $guru = 2;
+            $valuekelas = implode(",", $this->input->post('kelas'));
+            $kelas = (explode(",", $valuekelas));
+            $oldkelas = [
+                'kelas1a', 'kelas2a', 'kelas3a', 'kelas4a', 'kelas5a', 'kelas6a',
+                'kelas1b', 'kelas2b', 'kelas3b', 'kelas4b', 'kelas5b', 'kelas6b',
+                'kelas1c', 'kelas2c', 'kelas3c', 'kelas4c', 'kelas5c', 'kelas6c'
+            ];
+            $countkelas = count($kelas);
+            for ($i = 0; $i < 18; $i++) {
+                if (isset($kelas[$i])) {
+                    $kelas[$i] = $kelas[$i];
+                } else {
+                    $kelas[$i] = null;
+                }
+            }
+
             $data = array(
                 'name' => $this->input->post('name'),
                 'username' => $this->input->post('username'),
                 'password' => sha1($this->input->post('password')),
-                'akses_level' => $guru,
+                'akses_level' => 2,
             );
-
             $this->guru_model->add($data);
-            $this->session->set_flashdata('sukses', 'guru telah ditambah');
-            redirect(base_url('guru'));
-        }
-    }
 
-    public function hapus($username)
-    {
-        $user = $this->guru_model->detail($username);
-        if ($user->username == "admin21") {
-            redirect('pagenotfound404', 'refresh');
-        } else {
-            $data = array('username' => $user->username);
-            $this->guru_model->delete($data);
-            $this->session->set_flashdata('sukses', 'Data berhasil dihapus');
+            $insert_id = $this->db->insert_id();
+            for ($i = 0; $i < $countkelas; $i++) {
+                for ($j = 0; $j < 18; $j++) {
+                    if ($kelas[$i] == $oldkelas[$j]) {
+                        $data_update = array(
+                            'id'    => $insert_id,
+                            "$oldkelas[$j]" => $kelas[$i]
+                        );
+                        $this->guru_model->edit($data_update);
+                    }
+                }
+            }
+
+            $this->session->set_flashdata('sukses', 'guru telah ditambah');
             redirect(base_url('guru'));
         }
     }
 
     public function edit($id)
     {
-        $user = $this->guru_model->listing_admin($id);
         $this->form_validation->set_rules('name', 'name', 'required', array('required' => 'name user harus diisi'));
-        $this->form_validation->set_rules('password', 'Password', 'required|max_length[12]|min_length[6]', array(
-            'required' => 'Password harus diisi',
-            'max_length' => 'Password maksimal 12 karakter',
-            'min_length' => 'Password minimal 6 karakter'
-        ));
-        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]', array(
-            'required' => 'Confirm Password harus diisi',
-            'matches' => 'Password tidak sesuai'
-        ));
+        $this->form_validation->set_rules('username', 'username', 'required', array('required' => 'username user harus diisi'));
+
 
         if ($this->form_validation->run() === FALSE) {
 
+            $user = $this->guru_model->detail_guru($id);
+            $kelas = $this->kelas_model->listing();
             $data = array(
-                'title'     => 'guru SDN 014',
-                'isi'         => 'admin/guru/list',
-                'user'    => $user
+                'title' => 'Guru',
+                'isi' => 'admin/guru/edit',
+                'kelas' => $kelas,
+                'user' => $user,
             );
-            $this->load->view('admin/layout/wrapper', $data);
+
+            $this->load->view('admin/layout/wrapper', $data, FALSE);
         } else {
-            $guru = 2;
             $data = array(
                 'id'    => $id,
                 'name' => $this->input->post('name'),
-                'password' => sha1($this->input->post('password')),
-                'akses_level' => $guru
+                'username' => $this->input->post('username'),
+                'kelas1a' => null,
+                'kelas1b' => null,
+                'kelas1c' => null,
+                'kelas2a' => null,
+                'kelas2b' => null,
+                'kelas2c' => null,
+                'kelas3a' => null,
+                'kelas3b' => null,
+                'kelas3c' => null,
+                'kelas4a' => null,
+                'kelas4b' => null,
+                'kelas4c' => null,
+                'kelas5a' => null,
+                'kelas5b' => null,
+                'kelas5c' => null,
+                'kelas6a' => null,
+                'kelas6b' => null,
+                'kelas6c' => null
             );
-
             $this->guru_model->edit($data);
+
+            $valuekelas = implode(",", $this->input->post('kelas'));
+            $kelas = (explode(",", $valuekelas));
+            $oldkelas = [
+                'kelas1a', 'kelas2a', 'kelas3a', 'kelas4a', 'kelas5a', 'kelas6a',
+                'kelas1b', 'kelas2b', 'kelas3b', 'kelas4b', 'kelas5b', 'kelas6b',
+                'kelas1c', 'kelas2c', 'kelas3c', 'kelas4c', 'kelas5c', 'kelas6c'
+            ];
+            $countkelas = count($kelas);
+            for ($i = 0; $i < 18; $i++) {
+                if (isset($kelas[$i])) {
+                    $kelas[$i] = $kelas[$i];
+                } else {
+                    $kelas[$i] = null;
+                }
+            }
+            for ($i = 0; $i < $countkelas; $i++) {
+                for ($j = 0; $j < 18; $j++) {
+                    if ($kelas[$i] == $oldkelas[$j]) {
+                        $data_update = array(
+                            'id'    => $id,
+                            "$oldkelas[$j]" => $kelas[$i]
+                        );
+                        $this->guru_model->edit($data_update);
+                    }
+                }
+            }
+
             $this->session->set_flashdata('sukses', 'Data telah diedit');
             redirect(base_url('guru'));
         }
     }
 
-    public function reset_password($id)
+    //CREATE
+    function create()
     {
-        $karakter = "ABCDEFGHIJKLMNOPQRSTUVWQYZ1234567890";
-        $password = substr(str_shuffle($karakter), 0, 8);
-        $data = array(
-            'id' => $id,
-            'password' => sha1($password),
-        );
+        // $guru = $this->input->post('guru', TRUE);
+        $kelas = $this->input->post('kelas', TRUE);
+        $name = $this->input->post('name', TRUE);
+        $username = $this->input->post('username', TRUE);
+        $password = sha1($this->input->post('password'));
+        $this->gurukelas_model->create_guru($name, $kelas, $username, $password);
+        redirect('guru');
+    }
 
-        $this->user_model->update($data);
+    function get_kelas_by_guru()
+    {
+        $guru_id = $this->input->post('guru_id');
+        $data = $this->gurukelas_model->get_kelas_by_guru($guru_id)->result();
+        foreach ($data as $result) {
+            $value[] = (float) $result->kelas_id;
+        }
+        echo json_encode($value);
+    }
 
-        $this->session->set_flashdata('sukses', 'Simpan Password Berikut : ' . $password);
+    //UPDATE
+    function update()
+    {
+        $id = $this->input->post('edit_id', TRUE);
+        $guru = $this->input->post('guru_edit', TRUE);
+        $kelas = $this->input->post('kelas_edit', TRUE);
+        $this->gurukelas_model->update_guru($id, $guru, $kelas);
+        redirect('guru');
+    }
+
+    public function hapus($id)
+    {
+        $user = $this->user_model->detail($id);
+        $data = array('id' => $user->id);
+        $this->user_model->delete($data);
+        $this->session->set_flashdata('sukses', 'Data berhasil dihapus');
         redirect(base_url('guru'));
     }
 }

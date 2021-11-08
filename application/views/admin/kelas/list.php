@@ -26,7 +26,6 @@
                      <thead>
                          <tr>
                              <th>Nama Kelas</th>
-                             <th>Jumlah Pelajar</th>
                              <th>Aksi</th>
                          </tr>
                      </thead>
@@ -34,9 +33,8 @@
                          <?php foreach ($kelas as $kelas) { ?>
                              <tr>
                                  <td><?php echo $kelas->nama_kelas; ?></td>
-                                 <td><?php echo $kelas->jumlah_kelas; ?></td>
                                  <td>
-                                     <a href="<?php echo base_url('users_kelas/pengguna/' . $kelas->id); ?>" class="btn btn-success btn-sm"><i class="fa fa-users"></i> Pengguna</a>
+                                     <a href="<?php echo base_url('users_kelas/pengguna/' . $kelas->id); ?>" class="btn btn-success btn-sm"><i class="fa fa-users"></i> Murid</a>
                                      <?php if ($this->session->userdata('akses_level') == '21') { ?>
                                          <?php include('edit.php'); ?>
                                          <?php include('delete.php'); ?>

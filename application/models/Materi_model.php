@@ -108,6 +108,12 @@ class Materi_model extends CI_Model
 	{
 		$this->db->insert('unduhan', $data);
 	}
+
+	public function delete_materi_kelas($id)
+	{
+		$this->db->where_in('id_kelas', $id);
+		$this->db->delete('materi');
+	}
 }
 
 /* End of file Materi_model.php */

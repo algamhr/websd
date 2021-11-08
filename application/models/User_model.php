@@ -29,7 +29,7 @@ class User_model extends CI_Model
     }
     public function listing_guru()
     {
-        $query = $this->db->query("select id, name from user where akses_level=2");
+        $query = $this->db->query("select * from user where akses_level=2");
         return $query->result();
     }
 
