@@ -51,6 +51,76 @@
                             <label for="username">Username</label>
                             <input type="text" class="form-control form-control-sm" name="username" id="username" value="<?php echo $profile_edit->username ?>" readonly>
                         </div>
+                        <?php if ($this->session->userdata('akses_level') == '1') { ?>
+                            <div class="form-group">
+                                <label for="id_kelas">Kelas</label>
+                                <input type="text" class="form-control form-control-sm" name="id_kelas" id="id_kelas" value="<?php echo $profile_edit->nama_kelas; ?>" readonly>
+                            </div>
+                        <?php } elseif ($this->session->userdata('akses_level') == '2') { ?>
+                            <div class="form-group">
+                                <label for="id_kelas">Kelas</label>
+                                <?php if ($profile->akses_level == 2) { ?>
+                                    <select class="form-control bootstrap-select" id="kelas" name="kelas[]" multiple disabled>
+                                        <option value="kelas1a" <?php if ($profile->kelas1a == "kelas1a") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 1 A</option>
+                                        <option value="kelas1b" <?php if ($profile->kelas1b == "kelas1b") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 1 B</option>
+                                        <option value="kelas1c" <?php if ($profile->kelas1c == "kelas1c") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 1 C</option>
+                                        <option value="kelas2a" <?php if ($profile->kelas2a == "kelas2a") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 2 A</option>
+                                        <option value="kelas2b" <?php if ($profile->kelas2b == "kelas2b") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 2 B</option>
+                                        <option value="kelas2c" <?php if ($profile->kelas2c == "kelas2c") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 2 C</option>
+                                        <option value="kelas3a" <?php if ($profile->kelas3a == "kelas3a") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 3 A</option>
+                                        <option value="kelas3b" <?php if ($profile->kelas3b == "kelas3b") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 3 B</option>
+                                        <option value="kelas3c" <?php if ($profile->kelas3c == "kelas3c") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 3 C</option>
+                                        <option value="kelas4a" <?php if ($profile->kelas4a == "kelas4a") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 4 A</option>
+                                        <option value="kelas4b" <?php if ($profile->kelas4b == "kelas4b") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 4 B</option>
+                                        <option value="kelas4c" <?php if ($profile->kelas4c == "kelas4c") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 4 C</option>
+                                        <option value="kelas5a" <?php if ($profile->kelas5a == "kelas5a") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 5 A</option>
+                                        <option value="kelas5b" <?php if ($profile->kelas5b == "kelas5b") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 5 B</option>
+                                        <option value="kelas5c" <?php if ($profile->kelas5c == "kelas5c") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 5 C</option>
+                                        <option value="kelas6a" <?php if ($profile->kelas6a == "kelas6a") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 6 A</option>
+                                        <option value="kelas6b" <?php if ($profile->kelas6b == "kelas6b") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 6 B</option>
+                                        <option value="kelas6c" <?php if ($profile->kelas6c == "kelas6c") {
+                                                                    echo "selected";
+                                                                } ?>>Kelas 6 C</option>
+                                    </select>
+                                <?php } else { ?>
+                                    <input type="text" class="form-control form-control-sm" name="id_kelas" id="id_kelas" value="<?php echo $profile->nama_kelas ?>" readonly>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
                         <div class="form-group">
                             <label for="jenis_kelamin">Jenis Kelamin</label>
                             <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
@@ -107,33 +177,124 @@
                         </div>
                         <div class="form-group">
                             <label for="id_kelas">Kelas</label>
-                            <input type="text" class="form-control form-control-sm" name="id_kelas" id="id_kelas" value="<?php echo $profile->nama_kelas ?>" readonly>
+                            <?php if ($profile->akses_level == 2) { ?>
+                                <select class="form-control bootstrap-select" id="kelas" name="kelas[]" multiple disabled>
+                                    <option value="kelas1a" <?php if ($profile->kelas1a == "kelas1a") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 1 A</option>
+                                    <option value="kelas1b" <?php if ($profile->kelas1b == "kelas1b") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 1 B</option>
+                                    <option value="kelas1c" <?php if ($profile->kelas1c == "kelas1c") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 1 C</option>
+                                    <option value="kelas2a" <?php if ($profile->kelas2a == "kelas2a") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 2 A</option>
+                                    <option value="kelas2b" <?php if ($profile->kelas2b == "kelas2b") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 2 B</option>
+                                    <option value="kelas2c" <?php if ($profile->kelas2c == "kelas2c") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 2 C</option>
+                                    <option value="kelas3a" <?php if ($profile->kelas3a == "kelas3a") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 3 A</option>
+                                    <option value="kelas3b" <?php if ($profile->kelas3b == "kelas3b") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 3 B</option>
+                                    <option value="kelas3c" <?php if ($profile->kelas3c == "kelas3c") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 3 C</option>
+                                    <option value="kelas4a" <?php if ($profile->kelas4a == "kelas4a") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 4 A</option>
+                                    <option value="kelas4b" <?php if ($profile->kelas4b == "kelas4b") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 4 B</option>
+                                    <option value="kelas4c" <?php if ($profile->kelas4c == "kelas4c") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 4 C</option>
+                                    <option value="kelas5a" <?php if ($profile->kelas5a == "kelas5a") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 5 A</option>
+                                    <option value="kelas5b" <?php if ($profile->kelas5b == "kelas5b") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 5 B</option>
+                                    <option value="kelas5c" <?php if ($profile->kelas5c == "kelas5c") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 5 C</option>
+                                    <option value="kelas6a" <?php if ($profile->kelas6a == "kelas6a") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 6 A</option>
+                                    <option value="kelas6b" <?php if ($profile->kelas6b == "kelas6b") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 6 B</option>
+                                    <option value="kelas6c" <?php if ($profile->kelas6c == "kelas6c") {
+                                                                echo "selected";
+                                                            } ?>>Kelas 6 C</option>
+                                </select>
+                            <?php } else { ?>
+                                <input type="text" class="form-control form-control-sm" name="id_kelas" id="id_kelas" value="<?php echo $profile->nama_kelas ?>" readonly>
+                            <?php } ?>
                         </div>
                         <br>
                         <?php echo form_close(); ?>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <?php if ($profile->akses_level != 2) { ?>
+                <div class="col-md-6">
+                    <div class="col-md-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                Nilai Pelajaran (Rata-rata Nilai Materi Per Pelajaran)
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Pelajaran</th>
+                                                <th>Nilai</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($pelajaran as $pelajaran) { ?>
+                                                <tr>
+                                                    <td><?php echo $pelajaran->nama_pelajaran; ?></td>
+                                                    <td><?php echo $pelajaran->nilai_pelajaran; ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-12">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            Nilai Pelajaran (Rata-rata Nilai Materi Per Pelajaran)
+                            Detail Nilai Pelajaran
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Materi</th>
                                             <th>Pelajaran</th>
                                             <th>Nilai</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($pelajaran as $pelajaran) { ?>
+                                        <?php foreach ($nilai as $nilai) { ?>
                                             <tr>
-                                                <td><?php echo $pelajaran->nama_pelajaran; ?></td>
-                                                <td><?php echo $pelajaran->nilai_pelajaran; ?></td>
+                                                <td><?php echo $nilai->nama_materi; ?></td>
+                                                <td><?php echo $nilai->nama_pelajaran; ?></td>
+                                                <td><?php echo $nilai->nilai_akhir; ?></td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
@@ -142,37 +303,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        Detail Nilai Pelajaran
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Materi</th>
-                                        <th>Pelajaran</th>
-                                        <th>Nilai</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($nilai as $nilai) { ?>
-                                        <tr>
-                                            <td><?php echo $nilai->nama_materi; ?></td>
-                                            <td><?php echo $nilai->nama_pelajaran; ?></td>
-                                            <td><?php echo $nilai->nilai_akhir; ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         <?php } ?>
     </div>
 

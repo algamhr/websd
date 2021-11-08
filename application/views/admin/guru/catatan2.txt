@@ -1,0 +1,60 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <?php echo validation_errors('<div class="alert alert-warning">', '</div>'); ?>
+
+
+    <?php if (isset($error)) {
+        echo '<div class="alert alert-warning">';
+        echo $error;
+        echo '</div>';
+    }
+    ?>
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800"><?php echo $title; ?></h1>
+
+    <!-- DataTales Example -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <a href="<?php echo base_url('guru'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i> Kembali</a>
+                </div>
+                <div class="card-body">
+                    <?php $attribut = 'class="form-horizontal"';
+                    echo form_open(base_url('guru/edit/' . $user->id), $attribut);
+                    ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Nama Lengkap</label>
+                                <input type="text" class="form-control form-control-sm" name="name" id="name" value="<?php echo $user->name; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control form-control-sm" name="username" id="username" value="<?php echo $user->username; ?>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Daftar Guru</label>
+                                <select class="form-control" id="id_kelas" name="id_kelas[]" multiple>
+                                    <?php foreach ($kelas as $kelas) { ?>
+                                        <option value="<?php echo $kelas->id; ?>"><?php echo $kelas->nama_kelas; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                    </div>
+
+                    <?php echo form_close(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

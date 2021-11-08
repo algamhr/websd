@@ -12,19 +12,13 @@ class Kelas_model extends CI_Model
 
     public function listing()
     {
-        $query = $this->db->get('kelas');
+        $query = $this->db->query("select * from kelas order by nama_kelas");
         return $query->result();
     }
 
-    public function listing_guru($id_user)
+    public function listing_kelas_guru($id_user)
     {
         $query = $this->db->query("select kelas.*, user.id as iduser, user.username as user_username from kelas left join user on user.id = kelas.id_user where id_user=$id_user");
-        return $query->result();
-    }
-
-    public function listing_user()
-    {
-        $query = $this->db->query("select * from user where akses_level=2");
         return $query->result();
     }
 
@@ -41,6 +35,12 @@ class Kelas_model extends CI_Model
         $this->db->insert('kelas', $data);
     }
 
+    //tambah data
+    public function add_kelasguru($data)
+    {
+        $this->db->insert('kelasguru', $data);
+    }
+
     //edit data
     public function update($data)
     {
@@ -54,6 +54,26 @@ class Kelas_model extends CI_Model
         $this->db->where('id', $data['id']);
         $this->db->delete('kelas', $data);
     }
+
+    public function delete_kelas($id)
+    {
+        $this->db->where_in('id', $id);
+        $this->db->delete('kelas');
+    }
+
+    public function delete_kelasguru($id_kelas)
+    {
+        $this->db->where_in('id_kelas', $id_kelas);
+        $this->db->delete('kelasguru');
+    }
+
+    public function listing_kelasguru($id)
+    {
+        $query = $this->db->query("select * from kelasguru where detail_user_id=$id");
+        return $query->result();
+    }
+
+    //
 }
 
 /* End of file Pengguna_model.php */

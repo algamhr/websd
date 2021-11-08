@@ -105,6 +105,18 @@ class Nilai_pengguna_model extends CI_Model
 		$this->db->where_in('username', $username);
 		$this->db->delete('nilai_pengguna');
 	}
+
+	public function delete_nilai_kelas($id)
+	{
+		$this->db->where_in('id_kelas', $id);
+		$this->db->delete('nilai');
+	}
+
+	public function delete_nilai_pengguna_kelas($id)
+	{
+		$this->db->where_in('id_kelas', $id);
+		$this->db->delete('nilai_pengguna');
+	}
 }
 
 /* End of file Nilai_pengguna_model.php */

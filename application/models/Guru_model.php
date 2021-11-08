@@ -35,6 +35,13 @@ class Guru_model extends CI_Model
         return $query->row();
     }
 
+    //show data detail
+    public function detail_guru($id)
+    {
+        $query = $this->db->get_where('user', array('id' => $id));
+        return $query->row();
+    }
+
     //tambah data
     public function add($data)
     {
@@ -53,6 +60,18 @@ class Guru_model extends CI_Model
     {
         $this->db->where('username', $data['username']);
         $this->db->delete('user', $data);
+    }
+
+    public function delete_kelasguru($id_user)
+    {
+        $this->db->where_in('id_user', $id_user);
+        $this->db->delete('kelasguru');
+    }
+
+    public function listing_kelasguru($id_user)
+    {
+        $query = $this->db->query("select * from kelasguru where id_user=$id_user");
+        return $query->result();
     }
 }
 

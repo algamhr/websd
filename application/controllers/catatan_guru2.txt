@@ -1,0 +1,65 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Guru extends CI_Controller
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+        if ($this->session->userdata('akses_level') == 21) {
+            $this->load->model('guru_model');
+            $this->load->model('user_model');
+            $this->load->model('kelas_model');
+            $this->load->model('gurukelas_model');
+        } else {
+            redirect('pagenotfound404', 'refresh');
+        }
+    }
+
+    // READ
+    function index()
+    {
+        $data['kelas'] = $this->gurukelas_model->get_kelas();
+        $data['guru'] = $this->gurukelas_model->get_guru();
+        $data['listkelas'] = $this->kelas_model->listing();
+        $data['isi'] = 'admin/guru/list';
+        $data['title'] = 'Guru';
+        $this->load->view('admin/layout/wrapper', $data);
+    }
+
+    //CREATE
+    function create()
+    {
+        // $guru = $this->input->post('guru', TRUE);
+        $kelas = $this->input->post('kelas', TRUE);
+        $name = $this->input->post('name', TRUE);
+        $username = $this->input->post('username', TRUE);
+        $password = sha1($this->input->post('password'));
+        $this->gurukelas_model->create_guru($name, $kelas, $username, $password);
+        redirect('guru');
+    }
+
+    function get_kelas_by_guru()
+    {
+        $guru_id = $this->input->post('guru_id');
+        $data = $this->gurukelas_model->get_kelas_by_guru($guru_id)->result();
+        foreach ($data as $result) {
+            $value[] = (float) $result->kelas_id;
+        }
+        echo json_encode($value);
+    }
+
+    //UPDATE
+    function update()
+    {
+        $id = $this->input->post('edit_id', TRUE);
+        $guru = $this->input->post('guru_edit', TRUE);
+        $kelas = $this->input->post('kelas_edit', TRUE);
+        $this->gurukelas_model->update_guru($id, $guru, $kelas);
+        redirect('guru');
+    }
+}
+
+/* End of file guru.php */
+/* Location: ./application/controllers/guru.php */

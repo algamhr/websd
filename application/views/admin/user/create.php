@@ -32,14 +32,6 @@
                     <label for="confirm_password">Konfirmasi Password</label>
                     <input type="password" class="form-control form-control-sm" name="confirm_password" id="confirm_password" value="" required>
                 </div>
-                <div class="form-group">
-                    <label for="akses_level">Akses Level</label>
-                    <select class="form-control form-control-sm" id="akses_level" name="akses_level">
-                        <option value="21">Pengelola</option>
-                        <option value="2">Guru</option>
-                        <option value="1">Murid</option>
-                    </select>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>

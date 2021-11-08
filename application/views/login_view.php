@@ -27,7 +27,7 @@ $konfig = $this->konfigurasi_model->listing(); ?>
     <div class="container">
 
         <!-- Outer Row -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="margin-top: 150px;">
 
             <div class="col-lg-6">
 
