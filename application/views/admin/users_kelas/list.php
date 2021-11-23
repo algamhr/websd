@@ -16,6 +16,12 @@
      <div class="card shadow mb-4">
          <div class="card-header py-3">
              <a href="<?php echo base_url('kelas'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i> Kembali</a>
+
+             <!-- Import Murid Button -->
+             <?php if ($this->session->userdata('akses_level') == '21') { ?>
+                 <?php include('import.php'); ?>
+             <?php } ?>
+
              <?php if ($status == "draft") { ?>
                  <a href="<?php echo base_url('users_kelas/publish_nilai/' . $id_kelas); ?>" class="btn btn-primary btn-sm"><i class="fa fa-bullhorn"></i> Publish</a>
              <?php } elseif ($status == "publish") { ?>

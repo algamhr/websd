@@ -67,13 +67,15 @@ $konfig = $this->konfigurasi_model->listing(); ?>
                 <span>Kuis</span></a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url(); ?>materi">
+                <i class="fa fa-book"></i>
+                <span>Materi</span></a>
+        </li>
+
     <?php } ?>
 
-    <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url(); ?>materi">
-            <i class="fa fa-book"></i>
-            <span>Materi</span></a>
-    </li>
+
 
     <?php if ($this->session->userdata('akses_level') == '1') { ?>
 
@@ -81,6 +83,12 @@ $konfig = $this->konfigurasi_model->listing(); ?>
             <a class="nav-link" href="<?php echo base_url('nilai_pengguna/pengguna/' . $this->session->userdata('id_kelas')); ?>">
                 <i class="fa fa-desktop"></i>
                 <span>Nilai Pengguna</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url(); ?>materi">
+                <i class="fa fa-book"></i>
+                <span>Materi</span></a>
         </li>
     <?php } ?>
 
