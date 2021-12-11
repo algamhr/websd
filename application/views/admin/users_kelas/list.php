@@ -9,6 +9,8 @@
         //error validasi
         echo validation_errors('<div class="alert alert-warning">', '</div>'); ?>
 
+     <div id="flashdata"></div>
+
      <!-- Page Heading -->
      <h1 class="h3 mb-2 text-gray-800"><?php echo $title; ?></h1>
 

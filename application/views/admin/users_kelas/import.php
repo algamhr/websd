@@ -12,13 +12,10 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <?php $attribut = 'class="form-horizontal"';
-            echo form_open(base_url('users_kelas'), $attribut);
-            ?>
-            <form method="POST" action="<?php echo base_url('users_kelas/excel') ?>" enctype="multipart/form-data">
+            <form class="form-horizontal importform" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nama_kelas">Import Data Murid (.excel) </label>
+                        <label for="nama_kelas">Import Data Murid</label>
                         <input id="import_murid" name="import_murid" type="file" class="form-control form-control-sm" data-browse-on-zone-click="true" accept=".xls, .xlsx" required>
                         <br>
                         <span class="text-secondary">File yang harus diupload : .xls, xlsx</span>
@@ -28,7 +25,6 @@
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
                     <button type="submit" name="import" class="btn btn-primary btn-sm">Simpan</button>
                 </div>
-                <?php echo form_close(); ?>
             </form>
         </div>
     </div>

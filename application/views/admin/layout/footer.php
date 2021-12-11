@@ -102,6 +102,39 @@ $konfig = $this->konfigurasi_model->listing(); ?>
     $('.bootstrap-select').selectpicker();
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#tambahModal").on("submit", ".importform", function(e) {
+            e.preventDefault();
+            var r = $(this);
+            var n = new FormData(r[0]);
+            $.ajax({
+                url: "<?= base_url('users_kelas/excel') ?>",
+                type: "POST",
+                data: n,
+                async: !0,
+                contentType: !1,
+                dataType: "json",
+                processData: !1,
+                success: function(e) {
+                    console.log(e.responseJSON);
+                    var response = e.responseJSON;
+                    $("#flashdata").html(response.message);
+                    $("#tambahModal").modal('hide');
+                },
+                error: function(a, t, e) {
+                    $("#flashdata").html(e);
+                    $("#tambahModal").modal('hide');
+                },
+                complete: function(e) {
+
+                },
+            });
+        });
+
+    });
+</script>
+
 </body>
 
 </html>

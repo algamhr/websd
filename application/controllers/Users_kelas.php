@@ -101,13 +101,14 @@ class Users_kelas extends CI_Controller
     {
         if (isset($_FILES["import_murid"]["name"])) {
             // upload
-            $file_tmp = $_FILES['file']['tmp_name'];
-            $file_name = $_FILES['file']['name'];
-            $file_size = $_FILES['file']['size'];
-            $file_type = $_FILES['file']['type'];
+            $file_tmp = $_FILES['import_murid']['tmp_name'];
+            $file_name = $_FILES['import_murid']['name'];
+            $file_size = $_FILES['import_murid']['size'];
+            $file_type = $_FILES['import_murid']['type'];
             // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
 
             $object = PHPExcel_IOFactory::load($file_tmp);
+            $data = array();
 
             foreach ($object->getWorksheetIterator() as $worksheet) {
 
@@ -120,31 +121,55 @@ class Users_kelas extends CI_Controller
                     $nama = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
                     $jenis_kelamin = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
                     $agama = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $username = str_replace(' ', '.', strtolower($nama));
+                    $password = sha1($username);
+                    $akses_level = '1';
+                    $kelas = $nama_kelas;
+                    // $kelas belum selesai
 
-                    $data[] = array(
+                    array_push($data, array(
+                        'username'      => $username,
+                        'password'      => $password,
                         'nisn'          => $nisn,
-                        'nama'          => $nama,
+                        'name'          => $nama,
                         'jenis_kelamin' => $jenis_kelamin,
                         'agama'         => $agama,
-                    );
+                        'akses_level'   => $akses_level,
+                        'kelas' = $kelas,
+                    ));
                 }
             }
 
-            $this->db->insert_batch('user', $data);
+            // echo json_encode($data);
 
-            $message = array(
-                'message' => '<div class="alert alert-success">Import file excel berhasil disimpan di database</div>',
-            );
+            $message = array();
 
-            $this->session->set_flashdata($message);
-            redirect('users_kelas/pengguna/');
+            if ($data) {
+                $insertAll = $this->db->insert_batch('user', $data);
+                if (!$insertAll && $this->db->_error_number() == 1062) {
+                    $message = array(
+                        'state'   => 'failed',
+                        'message' => '<div class="alert alert-danger">Import file gagal, coba lagi</div>',
+                    );
+                } else {
+                    $message = array(
+                        'state'   => 'success',
+                        'message' => '<div class="alert alert-success">Import file excel berhasil disimpan di database</div>',
+                    );
+                }
+            } else {
+                $message = array(
+                    'state'   => 'failed',
+                    'message' => '<div class="alert alert-danger">Import file gagal, coba lagi</div>',
+                );
+            }
+            echo json_encode($message);
         } else {
             $message = array(
+                'state'   => 'failed',
                 'message' => '<div class="alert alert-danger">Import file gagal, coba lagi</div>',
             );
-
-            $this->session->set_flashdata($message);
-            redirect('users_kelas/pengguna/');
+            echo json_encode($message);
         }
     }
 
