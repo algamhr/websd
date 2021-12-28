@@ -152,6 +152,7 @@ class Users_kelas extends CI_Controller
 
                 //$next_id = $next_id + 1;
                 //Untuk buat username +1
+
             }
 
             // echo json_encode($data);

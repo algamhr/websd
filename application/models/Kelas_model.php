@@ -18,7 +18,7 @@ class Kelas_model extends CI_Model
 
     public function listing_kelas_guru($id_user)
     {
-        $query = $this->db->query("select kelas.*, user.id as iduser, user.username as user_username from kelas left join user on user.id = kelas.id_user where id_user=$id_user");
+        $query = $this->db->query("select * from kelas");
         return $query->result();
     }
 
