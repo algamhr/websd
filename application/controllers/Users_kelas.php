@@ -66,6 +66,7 @@ class Users_kelas extends CI_Controller
                 }
             }
             $data = array(
+                'slug_kelas' => $kelas->slug_kelas,
                 'title' => $kelas->nama_kelas,
                 'isi' => 'admin/users_kelas/list',
                 'user' => $user,
@@ -99,6 +100,18 @@ class Users_kelas extends CI_Controller
 
     public function excel()
     {
+        $id_kelas = $this->input->post('id_kelas');
+        //$total_user = 0;
+        //TODO : mendapatkan total user yang punya id_kelas = $id_kelas
+
+        $slug_kelas = $this->input->post('slug_kelas');
+        //TODO : mendapatkan username slug_kelas LIKE '$slug_kelas%' ORDER BY username DESCENDING, LIMIT 1
+
+        //$last_number = 0;
+        //TODO : extract username, pisahkan slug_kelas dan angkanya, str_split by '-'
+
+        //$next_id = ($total_user == 0) ? 1 : $last_number + 1;
+
         if (isset($_FILES["import_murid"]["name"])) {
             // upload
             $file_tmp = $_FILES['import_murid']['tmp_name'];
@@ -110,35 +123,35 @@ class Users_kelas extends CI_Controller
             $object = PHPExcel_IOFactory::load($file_tmp);
             $data = array();
 
-            foreach ($object->getWorksheetIterator() as $worksheet) {
+            $worksheet = $object->getSheet(0);
 
-                $highestRow = $worksheet->getHighestRow();
-                $highestColumn = $worksheet->getHighestColumn();
+            $highestRow = $worksheet->getHighestRow();
+            $highestColumn = $worksheet->getHighestColumn();
 
-                for ($row = 2; $row <= $highestRow; $row++) {
+            for ($row = 2; $row <= $highestRow; $row++) {
+                $nisn = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                $nama = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                $jenis_kelamin = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                $agama = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                $username = str_replace(' ', '.', strtolower($nama));
+                //$username = $slug_kelas . '-' . $next_id;
+                $password = sha1($username);
+                $akses_level = '1';
 
-                    $nisn = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                    $nama = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                    $jenis_kelamin = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                    $agama = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-                    $username = str_replace(' ', '.', strtolower($nama));
-                    $password = sha1($username);
-                    $akses_level = '1';
-                    $kelas = $nama_kelas;
-                    // $kelas belum selesai
+                array_push($data, array(
+                    'username'      => $username,
+                    'password'      => $password,
+                    'nisn'          => $nisn,
+                    'name'          => $nama,
+                    'jenis_kelamin' => $jenis_kelamin,
+                    'agama'         => $agama,
+                    'akses_level'   => $akses_level,
+                    'id_kelas'      => $id_kelas,
+                    $slug_kelas => $slug_kelas,
+                ));
 
-                    //ini error nya,  klo buka komen dibawah ini error
-                    // array_push($data, array(
-                    //     'username'      => $username,
-                    //     'password'      => $password,
-                    //     'nisn'          => $nisn,
-                    //     'name'          => $nama,
-                    //     'jenis_kelamin' => $jenis_kelamin,
-                    //     'agama'         => $agama,
-                    //     'akses_level'   => $akses_level,
-                    //     'kelas' = $kelas,
-                    // ));
-                }
+                //$next_id = $next_id + 1;
+                //Untuk buat username +1
             }
 
             // echo json_encode($data);

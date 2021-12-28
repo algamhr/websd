@@ -22,7 +22,7 @@ class Kelas extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('akses_level') == 21 || 2) {
+        if ($this->session->userdata('akses_level') == 21 || $this->session->userdata('akses_level') == 2) {
             $this->load->model('kelas_model');
             $this->load->model('user_model');
             $this->load->model('materi_model');
