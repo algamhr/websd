@@ -42,13 +42,15 @@ class Kelas extends CI_Controller
             $kelas = $this->kelas_model->listing();
         } else if ($this->session->userdata('akses_level') == 2) {
             $kelas = $this->kelas_model->listing_kelas_guru($this->session->userdata('id'));
+            $user = $this->user_model->detail_guru($this->session->userdata('id'));
         }
 
         if ($valid->run() === FALSE) {
             $data = array(
                 'title' => 'Kelas',
                 'isi' => 'admin/kelas/list',
-                'kelas' => $kelas
+                'kelas' => $kelas,
+                'user' => $user
             );
             $this->load->view('admin/layout/wrapper', $data, FALSE);
         } else {
@@ -65,33 +67,33 @@ class Kelas extends CI_Controller
             $this->session->set_flashdata('sukses', 'Data berhasil ditambah');
             redirect(base_url('kelas'));
 
-            // $id_userImplode = implode(",", $this->input->post('id_user'));
-            // $id_user = (explode(",", $id_userImplode));
-            // $count_iduser = count($id_user);
-            // for ($i = 0; $i < $count_iduser; $i++) {
-            //     $slug_kelas = url_title($this->input->post('nama_kelas'), 'dash', TRUE);
-            //     $data = array(
-            //         'nama_kelas' => $this->input->post('nama_kelas'),
-            //         'slug_kelas' => $slug_kelas,
-            //         'id_user' => $id_user[$i],
-            //         'tahun_ajaran' => $this->input->post('tahun_ajaran')
-            //     );
-            //     $this->db->insert('kelas', $data);
-            // }
+            $id_userImplode = implode(",", $this->input->post('id_user'));
+            $id_user = (explode(",", $id_userImplode));
+            $count_iduser = count($id_user);
+            for ($i = 0; $i < $count_iduser; $i++) {
+                $slug_kelas = url_title($this->input->post('nama_kelas'), 'dash', TRUE);
+                $data = array(
+                    'nama_kelas' => $this->input->post('nama_kelas'),
+                    'slug_kelas' => $slug_kelas,
+                    'id_user' => $id_user[$i],
+                    'tahun_ajaran' => $this->input->post('tahun_ajaran')
+                );
+                $this->db->insert('kelas', $data);
+            }
 
-            // $insert_id = $this->db->insert_id();
-            // $jumlah_kelas = $_POST['jumlah_kelas'];
-            // $slug_kelas = url_title($this->input->post('nama_kelas'), 'dash', TRUE);
-            // for ($i = 0; $i < $jumlah_kelas; $i++) {
-            //     $data = array(
-            //         'name' => "user" . $i,
-            //         'username' => $slug_kelas . "~" . $i,
-            //         'password' => sha1($slug_kelas . "~" . $i),
-            //         'akses_level' => 1,
-            //         'id_kelas' => $insert_id
-            //     );
-            //     $this->user_model->add($data);
-            // }
+            $insert_id = $this->db->insert_id();
+            $jumlah_kelas = $_POST['jumlah_kelas'];
+            $slug_kelas = url_title($this->input->post('nama_kelas'), 'dash', TRUE);
+            for ($i = 0; $i < $jumlah_kelas; $i++) {
+                $data = array(
+                    'name' => "user" . $i,
+                    'username' => $slug_kelas . "~" . $i,
+                    'password' => sha1($slug_kelas . "~" . $i),
+                    'akses_level' => 1,
+                    'id_kelas' => $insert_id
+                );
+                $this->user_model->add($data);
+            }
         }
     }
 

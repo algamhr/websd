@@ -84,6 +84,17 @@ class User_model extends CI_Model
         return $query->row();
     }
 
+    public function detail_guru($id)
+    {
+        $this->db->select('*');
+        $this->db->from('user');
+        //relasi database
+        //end relasi database
+        $this->db->where(array('id' => $id));
+        $query = $this->db->get();
+        return $query->row();
+    }
+
     public function delete_users_kelas($id)
     {
         $this->db->where_in('id_kelas', $id);

@@ -31,6 +31,11 @@
                      </thead>
                      <tbody>
                          <?php foreach ($kelas as $kelas) { ?>
+                            <?php if(
+                                $kelas->slug_kelas==$user->kelas1a || 
+                                $kelas->slug_kelas==$user->kelas2a ||
+                                $kelas->slug_kelas==$user->kelas3a 
+                                ){ ?>
                              <tr>
                                  <td><?php echo $kelas->nama_kelas; ?></td>
                                  <td>
@@ -41,6 +46,7 @@
                                      <?php } ?>
                                  </td>
                              </tr>
+                             <?php } ?>
                          <?php } ?>
                      </tbody>
                  </table>
