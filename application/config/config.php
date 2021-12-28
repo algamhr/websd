@@ -24,9 +24,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 // windows
-$config['base_url'] = 'http://localhost/sisfo_sekolah';
+// $config['base_url'] = 'http://localhost/sisfo_sekolah';
 //macbook
-// $config['base_url'] = 'http://localhost:8000';
+$config['base_url'] = 'http://localhost:8000';
 
 /*
 |--------------------------------------------------------------------------

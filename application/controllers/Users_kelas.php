@@ -127,16 +127,17 @@ class Users_kelas extends CI_Controller
                     $kelas = $nama_kelas;
                     // $kelas belum selesai
 
-                    array_push($data, array(
-                        'username'      => $username,
-                        'password'      => $password,
-                        'nisn'          => $nisn,
-                        'name'          => $nama,
-                        'jenis_kelamin' => $jenis_kelamin,
-                        'agama'         => $agama,
-                        'akses_level'   => $akses_level,
-                        'kelas' = $kelas,
-                    ));
+                    //ini error nya,  klo buka komen dibawah ini error
+                    // array_push($data, array(
+                    //     'username'      => $username,
+                    //     'password'      => $password,
+                    //     'nisn'          => $nisn,
+                    //     'name'          => $nama,
+                    //     'jenis_kelamin' => $jenis_kelamin,
+                    //     'agama'         => $agama,
+                    //     'akses_level'   => $akses_level,
+                    //     'kelas' = $kelas,
+                    // ));
                 }
             }
 
