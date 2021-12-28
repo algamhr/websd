@@ -66,6 +66,7 @@ class Users_kelas extends CI_Controller
                 }
             }
             $data = array(
+                'slug_kelas' => $kelas->slug_kelas,
                 'title' => $kelas->nama_kelas,
                 'isi' => 'admin/users_kelas/list',
                 'user' => $user,
@@ -99,6 +100,18 @@ class Users_kelas extends CI_Controller
 
     public function excel()
     {
+        $id_kelas = $this->input->post('id_kelas');
+        //$total_user = 0;
+        //TODO : mendapatkan total user yang punya id_kelas = $id_kelas
+
+        $slug_kelas = $this->input->post('slug_kelas');
+        //TODO : mendapatkan username slug_kelas LIKE '$slug_kelas%' ORDER BY username DESCENDING, LIMIT 1
+
+        //$last_number = 0;
+        //TODO : extract username, pisahkan slug_kelas dan angkanya, str_split by '-'
+
+        //$next_id = ($total_user == 0) ? 1 : $last_number + 1;
+
         if (isset($_FILES["import_murid"]["name"])) {
             // upload
             $file_tmp = $_FILES['import_murid']['tmp_name'];
