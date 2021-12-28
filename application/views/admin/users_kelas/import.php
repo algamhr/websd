@@ -16,6 +16,8 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nama_kelas">Import Data Murid</label>
+                        <input type="hidden" name="id_kelas" value="<?= $id_kelas ?>" />
+                        <input type="hidden" name="slug_kelas" value="<?= $slug_kelas ?>" />
                         <input id="import_murid" name="import_murid" type="file" class="form-control form-control-sm" data-browse-on-zone-click="true" accept=".xls, .xlsx" required>
                         <br>
                         <span class="text-secondary">File yang harus diupload : .xls, xlsx</span>

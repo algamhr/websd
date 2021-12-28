@@ -117,9 +117,7 @@ $konfig = $this->konfigurasi_model->listing(); ?>
                 dataType: "json",
                 processData: !1,
                 success: function(e) {
-                    console.log(e.responseJSON);
-                    var response = e.responseJSON;
-                    $("#flashdata").html(response.message);
+                    $("#flashdata").html(e.message);
                     $("#tambahModal").modal('hide');
                 },
                 error: function(a, t, e) {
